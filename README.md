@@ -1,6 +1,6 @@
 # pico-probe
-Raspberry pi pico probe setup for linux (specifically linux mint on the CSU23021-202122 (MICROPROCESSOR SYSTEMS)) should work on ubuntu as well but not
-tested
+Raspberry pi pico probe setup for linux (specifically linux mint for the module CSU23021-202122 (MICROPROCESSOR SYSTEMS))
+should work on ubuntu as well but not tested
 
 ## Setup 
 1. Install git ``sudo apt install git``
