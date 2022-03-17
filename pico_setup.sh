@@ -183,10 +183,9 @@ if [ -e $OPENOCD_RULES_60 ]; then
 	#OPENOCD_60= 'cat /etc/udev/rules.d/60-openocd.rules | grep -e "ATTRS{idVendor}==\"2e8a\", ATTRS{idProduct}==\"0004\", MODE=\"660\", GROUP=\"plugdev\", TAG+=\"uaccess\""'
 	echo "$OPENOCD_RULES_60 already exists, assuming it's configured already"	
 else
-	touch $OPENOCD_RULES_60
-	echo 'Raspberry Pi Picoprobe' >> $OPENOCD_RULES_60
-	echo 'ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0004", MODE="660", GROUP="plugdev", TAG+="uaccess"' >> $OPENOCD_RULES_60
-
+	echo "Raspberry Pi Picoprobe" | sudo tee --append $OPENOCD_RULES_60
+	echo "ATTRS{idVendor}==\"2e8a\", ATTRS{idProduct}==\"0004\", MODE=\"660\", GROUP=\"plugdev\", TAG+=\"uaccess\"" | sudo tee --append $OPENOCD_RULES_60
+	
 	# Reload to prevent rebooting, (but might be necessary because of UART and maybe reloading won't help)
 	sudo udevadm control --reload
 fi
@@ -196,11 +195,12 @@ if [ -e $OPENOCD_RULES_98 ]; then
 	echo "$OPENOCD_RULES_98 already exists, assuming it's configured already"
 else
 	touch $OPENOCD_RULES_98
-	echo 'ACTION!="add|change", GOTO="openocd_rules_end"' >> $OPENOCD_RULES_98
-	echo 'SUBSYSTEM!="usb|tty|hidraw", GOTO="openocd_rules_end"' >> $OPENOCD_RULES_98
-	echo 'SUBSYSTEM!="usb|tty|hidraw", GOTO="openocd_rules_end"' >> $OPENOCD_RULES_98
-	echo 'ATTRS{product}=="*CMSIS-DAP*", MODE="664", GROUP="plugdev"' >> $OPENOCD_RULES_98
-	echo 'LABEL="openocd_rules_end"' >> $OPENOCD_RULES_98
+	echo "ACTION!=\"add|change\", GOTO=\"openocd_rules_end\"" | sudo tee --append $OPENOCD_RULES_98
+	
+	echo "SUBSYSTEM!=\"usb|tty|hidraw\", GOTO=\"openocd_rules_end\"" | sudo tee --append $OPENOCD_RULES_98
+	echo "SUBSYSTEM!=\"usb|tty|hidraw\", GOTO=\"openocd_rules_end\"" | sudo tee --append $OPENOCD_RULES_98
+	echo "ATTRS{product}==\"*CMSIS-DAP*\", MODE=\"664\", GROUP=\"plugdev\"" | sudo tee --append $OPENOCD_RULES_98
+	echo "LABEL=\"openocd_rules_end\"" | sudo tee --append $OPENOCD_RULES_98
 
 	# Reload to prevent rebooting, (but might be necessary because of UART and maybe reloading won't help)
 	sudo udevadm control --reload
