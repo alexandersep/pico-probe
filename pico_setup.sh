@@ -66,8 +66,6 @@ cd $OUTDIR
 
 if [ -d $DEST ]; then 
 	echo "$DEST already exists so skipping"
-elif [ "$SDK_IN_BASHRC" != "" ]; then
-	echo "$SDK_IN_BASHRC has been found in the bashrc file so skipping"
 else
 	REPO_URL="${GITHUB_PREFIX}pico-${REPO}${GIT_SUFFIX}"
 	echo "Cloning $REPO_URL"
@@ -81,14 +79,17 @@ else
 	# Define PICO_SDK_PATH in ~/.bashrc
 	VARNAME="PICO_${REPO^^}_PATH"
 	echo "Adding $VARNAME to ~/.bashrc"
-	echo "export $VARNAME=$DEST" >> ~/.bashrc
+	if [ "$SDK_IN_BASHRC" != "" ]; then
+		echo "$SDK_IN_BASHRC has been found in the bashrc file so skipping"
+	else
+		echo "export $VARNAME=$DEST" >> ~/.bashrc
+		# Pick up new variables we just defined
+		source ~/.bashrc
+	fi
 	export ${VARNAME}=$DEST
 fi
 
 cd $OUTDIR
-
-# Pick up new variables we just defined
-source ~/.bashrc
 
 # Picoprobe and picotool
 for REPO in picoprobe picotool
@@ -113,7 +114,7 @@ do
 		DEST="/usr/bin/picotool"
 		if [ -e $DEST_LOCAL ]; then 
 			echo "picotool already exists and can be found in $DEST_LOCAL"
-		elif [ -e $ $DEST ]; then
+		elif [ -e $DEST ]; then
 			echo "picotool already exists and can be found in $DEST"
 		else
 			sudo cp picotool /usr/local/bin/
@@ -127,32 +128,29 @@ done
 # Build openocd for debugging
 #
 # openocd -v goes into stderr, so I will redirect to stout by putting it into file and reading it
-echo "Attempting to install openocd" 
-openocd -v &> openocd_verion.txt # openocd -v writes to standard error instead of output, will write to file and extract that output
-OPENOCD_VERSION=$(cat openocd_verion.txt | head -n1 | cut -d" " -f4)
-sudo rm openocd_verion.txt
+#echo "Attempting to install openocd" 
+#openocd -v &> openocd_verion.txt # openocd -v writes to standard error instead of output, will write to file and extract that output
+#OPENOCD_VERSION=$(cat openocd_verion.txt | head -n1 | cut -d" " -f4)
+#sudo rm openocd_verion.txt
 
-if [ "$OPENOCD_VERSION" == "0.11.0-g610f137-dirty" ]; then
-	echo "Skipping as correct openocd already installed" 
-	echo "Assuming you know the location of your compiled openocd, if you don't then just delete the binary file and run again"
-else
-	# Build OpenOCD
-	echo "Building OpenOCD"
-	cd $OUTDIR
-	# Should we include picoprobe support (which is a Pico acting as a debugger for another Pico)
-	INCLUDE_PICOPROBE=1
-	OPENOCD_BRANCH="rp2040"
-	OPENOCD_CONFIGURE_ARGS="--enable-ftdi --enable-sysfsgpio --enable-bcm2835gpio"
-	if [[ "$INCLUDE_PICOPROBE" == 1 ]]; then
-	    OPENOCD_CONFIGURE_ARGS="$OPENOCD_CONFIGURE_ARGS --enable-picoprobe"
-	fi
-
-	git clone "${GITHUB_PREFIX}openocd${GITHUB_SUFFIX}" -b $OPENOCD_BRANCH --depth=1
-	cd openocd
-	./bootstrap
-	./configure $OPENOCD_CONFIGURE_ARGS
-	sudo make clean install -j$JNUM
+i#f [ "$OPENOCD_VERSION" == "0.11.0-g610f137-dirty" ]; then
+#	echo "Skipping as correct openocd already installed" 
+#	echo "Assuming you know the location of your compiled openocd, if you don't then just delete the binary file and run again"
+# Build OpenOCD
+echo "Building OpenOCD"
+cd $OUTDIR
+# Should we include picoprobe support (which is a Pico acting as a debugger for another Pico)
+INCLUDE_PICOPROBE=1
+OPENOCD_BRANCH="rp2040"
+OPENOCD_CONFIGURE_ARGS="--enable-ftdi --enable-sysfsgpio --enable-bcm2835gpio"
+if [[ "$INCLUDE_PICOPROBE" == 1 ]]; then
+    OPENOCD_CONFIGURE_ARGS="$OPENOCD_CONFIGURE_ARGS --enable-picoprobe"
 fi
+git clone "${GITHUB_PREFIX}openocd${GITHUB_SUFFIX}" -b $OPENOCD_BRANCH --depth=1
+cd openocd
+./bootstrap
+./configure $OPENOCD_CONFIGURE_ARGS
+sudo make install -j$JNUM
 
 cd $OUTDIR
 
@@ -185,7 +183,9 @@ if [ -e $OPENOCD_RULES_60 ]; then
 	#OPENOCD_60= 'cat /etc/udev/rules.d/60-openocd.rules | grep -e "ATTRS{idVendor}==\"2e8a\", ATTRS{idProduct}==\"0004\", MODE=\"660\", GROUP=\"plugdev\", TAG+=\"uaccess\""'
 	echo "$OPENOCD_RULES_60 already exists, assuming it's configured already"	
 else
-	echo 'Raspberry Pi Picoprobe' >> $OPENOCD_RULES/60-openocd.rules
+	touch $OPENOCD_RULES_60
+	echo 'Raspberry Pi Picoprobe' >> $OPENOCD_RULES_60
+	echo 'ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0004", MODE="660", GROUP="plugdev", TAG+="uaccess"' >> $OPENOCD_RULES_60
 
 	# Reload to prevent rebooting, (but might be necessary because of UART and maybe reloading won't help)
 	sudo udevadm control --reload
@@ -195,11 +195,12 @@ fi
 if [ -e $OPENOCD_RULES_98 ]; then
 	echo "$OPENOCD_RULES_98 already exists, assuming it's configured already"
 else
-	echo 'ACTION!="add|change", GOTO="openocd_rules_end"' >> $OPENOCD_RULES/98-openocd.rules/
-	echo 'SUBSYSTEM!="usb|tty|hidraw", GOTO="openocd_rules_end"' >> $OPENOCD_RULES/98-openocd.rules/
-	echo 'SUBSYSTEM!="usb|tty|hidraw", GOTO="openocd_rules_end"' >> $OPENOCD_RULES/98-openocd.rules/
-	echo 'ATTRS{product}=="*CMSIS-DAP*", MODE="664", GROUP="plugdev"' >> $OPENOCD_RULES/98-openocd.rules/
-	echo 'LABEL="openocd_rules_end"' >> $OPENOCD_RULES/98-openocd.rules/
+	touch $OPENOCD_RULES_98
+	echo 'ACTION!="add|change", GOTO="openocd_rules_end"' >> $OPENOCD_RULES_98
+	echo 'SUBSYSTEM!="usb|tty|hidraw", GOTO="openocd_rules_end"' >> $OPENOCD_RULES_98
+	echo 'SUBSYSTEM!="usb|tty|hidraw", GOTO="openocd_rules_end"' >> $OPENOCD_RULES_98
+	echo 'ATTRS{product}=="*CMSIS-DAP*", MODE="664", GROUP="plugdev"' >> $OPENOCD_RULES_98
+	echo 'LABEL="openocd_rules_end"' >> $OPENOCD_RULES_98
 
 	# Reload to prevent rebooting, (but might be necessary because of UART and maybe reloading won't help)
 	sudo udevadm control --reload
