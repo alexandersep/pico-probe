@@ -145,9 +145,7 @@ fi
 echo "Attempting to give permissions to plugdev group for openocd debugging"
 OPENOCD_RULES_60="/etc/udev/rules.d/60-openocd.rules"
 OPENOCD_RULES_98="/etc/udev/rules.d/98-openocd.rules"
-#OPENOCD_60= "cat /etc/udev/rules.d/60-openocd.rules | grep -e "ATTRS{idVendor}==\"2e8a\", ATTRS{idProduct}==\"0004\", MODE=\"660\", GROUP=\"plugdev\", TAG+=\"uaccess\"""
 if [ -e $OPENOCD_RULES_60 ]; then
-	#OPENOCD_60= 'cat /etc/udev/rules.d/60-openocd.rules | grep -e "ATTRS{idVendor}==\"2e8a\", ATTRS{idProduct}==\"0004\", MODE=\"660\", GROUP=\"plugdev\", TAG+=\"uaccess\""'
 	echo "$OPENOCD_RULES_60 already exists, assuming it's configured already"	
 else
 	echo "Raspberry Pi Picoprobe" | sudo tee --append $OPENOCD_RULES_60
