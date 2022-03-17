@@ -133,7 +133,7 @@ done
 #OPENOCD_VERSION=$(cat openocd_verion.txt | head -n1 | cut -d" " -f4)
 #sudo rm openocd_verion.txt
 
-i#f [ "$OPENOCD_VERSION" == "0.11.0-g610f137-dirty" ]; then
+#if [ "$OPENOCD_VERSION" == "0.11.0-g610f137-dirty" ]; then
 #	echo "Skipping as correct openocd already installed" 
 #	echo "Assuming you know the location of your compiled openocd, if you don't then just delete the binary file and run again"
 # Build OpenOCD
