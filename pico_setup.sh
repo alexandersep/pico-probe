@@ -220,7 +220,7 @@ elif [ -d  $VSCODE_LOCATION ]; then
 	echo "Skipping vscode" 
 elif [ "$ANSWER" == "y" ] || [ "$ANSWER" == "yes" ]; then
    	echo "Installing VSCODE"
-	VSCODE_DEB="'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'"
+	VSCODE_DEB="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 
 	wget -O vscode.deb $VSCODE_DEB
 	sudo apt install -y ./vscode.deb
