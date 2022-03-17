@@ -33,28 +33,6 @@ GITHUB_PREFIX="https://github.com/raspberrypi/"
 GIT_SUFFIX=".git"
 SDK_BRANCH="master"
 
-# gitlab.scss username, for installation of forked pico-apps repository
-#read -p "Input your username for gitlab.scss.tcd.ie: " GITLAB_SCSS_USERNAME
-#echo
-#GITLAB_SCSS_PREFIX="https://gitlab.scss.tcd.ie/"
-
-# Clone gitlab repository
-#REPO="apps"
-#DEST="$OUTDIR/pico-$REPO"
-
-#if [ -d $DEST ]; then
-#	echo "$DEST already exists so skipping"
-#else 
-##	REPO_URL="${GITLAB_SCSS_PREFIX}${GITLAB_SCSS_USERNAME}/pico-${REPO}${GIT_SUFFIX}"	
-#	echo "Cloning $REPO_URL"
-#	git clone $REPO_URL
-#
-#	# Any submodules
-#	cd $DEST
-#	git submodule update --init
-#	cd $OUTDIR
-#fi
-
 #for REPO in sdk #examples extras playground (this might be useless)
 echo "Attempting to install pico-sdk"
 REPO="sdk"
@@ -125,17 +103,6 @@ do
     fi
 done
 
-# Build openocd for debugging
-#
-# openocd -v goes into stderr, so I will redirect to stout by putting it into file and reading it
-#echo "Attempting to install openocd" 
-#openocd -v &> openocd_verion.txt # openocd -v writes to standard error instead of output, will write to file and extract that output
-#OPENOCD_VERSION=$(cat openocd_verion.txt | head -n1 | cut -d" " -f4)
-#sudo rm openocd_verion.txt
-
-#if [ "$OPENOCD_VERSION" == "0.11.0-g610f137-dirty" ]; then
-#	echo "Skipping as correct openocd already installed" 
-#	echo "Assuming you know the location of your compiled openocd, if you don't then just delete the binary file and run again"
 # Build OpenOCD
 echo "Building OpenOCD"
 cd $OUTDIR
@@ -205,7 +172,7 @@ else
 	sudo udevadm control --reload
 fi
 
-# Install VSCODE (if not installed already) (uncomment if vscode is not present)
+# Install VSCODE 
 #
 EXTRA_VSCODE_DEPS="libx11-xcb1 libxcb-dri3-0 libdrm2 libgbm1 libegl-mesa0"
 read -p "Do you want to install vscode? y/n: " ANSWER
