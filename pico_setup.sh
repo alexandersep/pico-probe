@@ -194,7 +194,6 @@ fi
 if [ -e $OPENOCD_RULES_98 ]; then
 	echo "$OPENOCD_RULES_98 already exists, assuming it's configured already"
 else
-	touch $OPENOCD_RULES_98
 	echo "ACTION!=\"add|change\", GOTO=\"openocd_rules_end\"" | sudo tee --append $OPENOCD_RULES_98
 	
 	echo "SUBSYSTEM!=\"usb|tty|hidraw\", GOTO=\"openocd_rules_end\"" | sudo tee --append $OPENOCD_RULES_98
