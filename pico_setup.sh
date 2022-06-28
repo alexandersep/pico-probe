@@ -4,6 +4,8 @@
 set -e
 
 # Number of cores when running make (default number of threads you have, can be replaced with a number (not in quotation marks))
+#example 
+#JNUM=4
 JNUM="$(grep -c processor /proc/cpuinfo)"
 
 # Where will the output go, (YOUR_CURRENT_LOCATION/pico) e.g. /home/user/Downloads/pico (if current location is Downloads)
@@ -173,7 +175,7 @@ fi
 # Install VSCODE 
 #
 EXTRA_VSCODE_DEPS="libx11-xcb1 libxcb-dri3-0 libdrm2 libgbm1 libegl-mesa0"
-read -p "Do you want to install vscode? y/n: " ANSWER
+read -p "Do you want to install the latest version of vscode? y/n: " ANSWER
 echo
 echo "Preparing installation of vscode"
 VSCODE_LOCATION="/usr/share/code/"
@@ -201,28 +203,20 @@ fi
 
 echo "Here is the list of extensions"
 echo "----------------------------------"
-EX_1="dan-c-underwood.arm"
-EX_2="jeff-hykin.better-cpp-syntax"
-EX_3="ms-vscode.cpptools"
-EX_4="ms-vscode.cpptools-extension-pack"
-EX_5="ms-vscode.cpptools-themes"
-EX_6="twxs.cmake"
-EX_7="marus25.cortex-debug"
-EX_8="cschlosser.doxdocgen"
-EX_9="betwo.vscode-doxygen-runner"
-EX_10="mhutchie.git-graph"
-EX_11="eamodio.gitlens"
-echo "1.$EX_1"
-echo "2.$EX_2"
-echo "3.$EX_3"
-echo "4.$EX_4"
-echo "5.$EX_5"
-echo "6.$EX_6"
-echo "7.$EX_7"
-echo "8.$EX_8"
-echo "9.$EX_9"
-echo "10.$EX_10"
-echo "11.$EX_11"
+EX=("dan-c-underwood.arm" "jeff-hykin.better-cpp-syntax" "ms-vscode.cpptools" "ms-vscode.cpptools-extension-pack"
+    "ms-vscode.cpptools-themes" "twxs.cmake" "marus25.cortex-debug" "cschlosser.doxdocgen" "betwo.vscode-doxygen-runner"
+    "betwo.vscode-doxygen-runner" "mhutchie.git-graph" "eamodio.gitlens")
+echo "1.${EX[0]}"
+echo "2.${EX[1]}"
+echo "3.${EX[2]}"
+echo "4.${EX[3]}"
+echo "5.${EX[4]}"
+echo "6.${EX[5]}"
+echo "7.${EX[6]}"
+echo "8.${EX[7]}"
+echo "9.${EX[8]}"
+echo "10.${EX[9]}"
+echo "11.${EX[10]}"
 
 read -p "Do you want to install the some or all extensions that are given in the module lectures? y/n: " ANSWER
 echo
@@ -230,46 +224,46 @@ if [ "$ANSWER" == "n" ] || [ "$ANSWER" == "no" ]; then
 	echo "You have selected no to installing the extensions"
 elif [ "$ANSWER" == "y" ] || [ "$ANSWER" == "yes" ]; then
 	echo "You have selected yes"
-	read -p "What extension do you want to install? (type exit to stop): " ANSWER
+	read -p "What extension do you want to install? (type exit to stop, or list to list the extensions again): " ANSWER
 	echo 
 	while [ "$ANSWER" != "exit" ];
 	do
 		# List of extensions that we were told to install (if already installed, it will skip unless specify --force which I don't)
 		# 
 		if [ "$ANSWER" == "list" ]; then
-			echo "1.$EX_1"
-			echo "2.$EX_2"
-			echo "3.$EX_3"
-			echo "4.$EX_4"
-			echo "5.$EX_5"
-			echo "6.$EX_6"
-			echo "7.$EX_7"
-			echo "8.$EX_8"
-			echo "9.$EX_9"
-			echo "10.$EX_10"
-			echo "11.$EX_11"
+			echo "1.${EX[0]}"
+			echo "2.${EX[1]}"
+			echo "3.${EX[2]}"
+			echo "4.${EX[3]}"
+			echo "5.${EX[4]}"
+			echo "6.${EX[5]}"
+			echo "7.${EX[6]}"
+			echo "8.${EX[7]}"
+			echo "9.${EX[8]}"
+			echo "10.${EX[9]}"
+			echo "11.${EX[10]}"
 		elif [ "$ANSWER" == "1" ]; then
-			$VSCODE --install-extension $EX_1 
+			$VSCODE --install-extension $EX[0] 
 		elif [ "$ANSWER" == "2" ]; then 
-			$VSCODE --install-extension $EX_2
+			$VSCODE --install-extension $EX[1]
 		elif [ "$ANSWER" == "3" ]; then 
-			$VSCODE --install-extension $EX_3
+			$VSCODE --install-extension $EX[2]
 		elif [ "$ANSWER" == "4" ]; then 
-			$VSCODE --install-extension $EX_4
+			$VSCODE --install-extension $EX[3]
 		elif [ "$ANSWER" == "5" ]; then 
-			$VSCODE --install-extension $EX_5
+			$VSCODE --install-extension $EX[4]
 		elif [ "$ANSWER" == "6" ]; then 
-			$VSCODE --install-extension $EX_6
+			$VSCODE --install-extension $EX[5]
 		elif [ "$ANSWER" == "7" ]; then 
-			$VSCODE --install-extension $EX_7
+			$VSCODE --install-extension $EX[6]
 		elif [ "$ANSWER" == "8" ]; then 
-			$VSCODE --install-extension $EX_8
+			$VSCODE --install-extension $EX[7]
 		elif [ "$ANSWER" == "9" ]; then 
-			$VSCODE --install-extension $EX_9
+			$VSCODE --install-extension $EX[8]
 		elif [ "$ANSWER" == "10" ]; then 
-			$VSCODE --install-extension $EX_10
+			$VSCODE --install-extension $EX[9]
 		elif [ "$ANSWER" == "11" ]; then 
-			$VSCODE --install-extension $EX_11
+			$VSCODE --install-extension $EX[10]
 		else
 			echo "Error: try again, input a number betwen 1-11"
 		fi
