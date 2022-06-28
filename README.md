@@ -1,5 +1,6 @@
-# APPS - Automatic Pico Probe Setup
-Raspberry pi pico probe setup for linux (specifically linux mint for the module CSU23021-202122 (MICROPROCESSOR SYSTEMS))
+# APPS - Automatic Pi Picoprobe Setup
+Raspberry pi pico probe setup as well as pi pico setup for linux 
+(specifically linux mint for the module CSU23021-202122 (MICROPROCESSOR SYSTEMS))
 should work on ubuntu as well but not tested
 
 ## Setup 
