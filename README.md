@@ -9,6 +9,7 @@ should work on ubuntu as well but not tested
 3. Enter folder ``cd pico-probe``
 4. Give yourself executable privileges ``chmod +x pico-probe``
 5. Run **APPS** ``./pico-setup.sh``
+6. If installation successfull a restart may be required
 
 ## Based on
 ``https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh``  
