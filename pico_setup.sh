@@ -153,7 +153,7 @@ else
 	echo "Raspberry Pi Picoprobe" | sudo tee --append $OPENOCD_RULES_60
 	echo "ATTRS{idVendor}==\"2e8a\", ATTRS{idProduct}==\"0004\", MODE=\"660\", GROUP=\"plugdev\", TAG+=\"uaccess\"" | sudo tee --append $OPENOCD_RULES_60
 	
-	# Reload to prevent rebooting, (but might be necessary because of UART and maybe reloading won't help)
+	# Reload to prevent rebooting, but might still be necesary
 	sudo udevadm control --reload
 fi
 
@@ -168,7 +168,7 @@ else
 	echo "ATTRS{product}==\"*CMSIS-DAP*\", MODE=\"664\", GROUP=\"plugdev\"" | sudo tee --append $OPENOCD_RULES_98
 	echo "LABEL=\"openocd_rules_end\"" | sudo tee --append $OPENOCD_RULES_98
 
-	# Reload to prevent rebooting, (but might be necessary because of UART and maybe reloading won't help)
+	# Reload to prevent rebooting, but might still be necessary
 	sudo udevadm control --reload
 fi
 
