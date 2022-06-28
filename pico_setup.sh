@@ -185,6 +185,10 @@ if [ -f vscode.deb ]; then
 	VSCODE="code"
 elif [ -d  $VSCODE_LOCATION ]; then
 	echo "Skipping vscode" 
+	echo "Make sure you have these extensions installed"
+	echo "marus25.cortex-debug"
+	echo "ms-vscode.cmake-tools"
+	echo "ms-vscode.cpptools"
 elif [ "$ANSWER" == "y" ] || [ "$ANSWER" == "yes" ]; then
    	echo "Installing VSCODE"
 	VSCODE_DEB="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
