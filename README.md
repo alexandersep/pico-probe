@@ -4,7 +4,9 @@ Raspberry pi pico probe setup as well as pi pico setup for linux
 should work on ubuntu as well but not tested
 
 ## Setup 
-1. Install git ``sudo apt install git``
+1. Install git ``sudo apt install git`` and make sure git is configured   
+   ``git config --global user.name "Your Name"``  
+   ``git config --global user.email "youremail@yourdomain.com"``
 2. Clone this github repository using 
   ``git clone https://github.com/alexandersep/pico-probe``
 3. Enter folder ``cd pico-probe``
