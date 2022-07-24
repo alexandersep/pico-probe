@@ -7,6 +7,7 @@ set -e
 #example 
 #JNUM=4
 JNUM=`nproc`
+JNUM=$((JNUM / 2)) # Usually the amount of cores is half the threads. Assuming this is a multithreaded computer
 
 # Where will the output go, (YOUR_CURRENT_LOCATION/pico) e.g. /home/user/Downloads/pico (if current location is Downloads)
 OUTDIR="$(pwd)/pico"
