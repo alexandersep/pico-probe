@@ -17,7 +17,7 @@ Raspberry pi pico probe setup as well as pi pico setup for Linux (tested with li
 * If you encounter an error with picoprobe failing a cmake, you're SDK\_PICO\_PATH is
   configured incorrectly. cmake sees one directory and your the path that was appended 
   in ~/.bashrc sees the other. Fix paths, delete and reclone picoprobe, try build and 
-  cmake again, it should resolve once paths are all matching
+  cmake again, it should resolve once paths are all matching.
 * You must not name a directory "pico". It is recommended to clone and run the script in
   home/$USER/ Documents/ directory. This is because a directory called pico will be created
   in the scipt.
