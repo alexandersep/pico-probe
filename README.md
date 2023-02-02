@@ -21,6 +21,7 @@ Raspberry pi pico probe setup as well as pi pico setup for Linux (tested with li
 * You must not name a directory "pico". It is recommended to clone and run the script in
   home/$USER/ Documents/ directory. This is because a directory called pico will be created
   in the scipt.
+* If you encounter a problem with building due to threads.
 
 ## Based on
 ``https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh``  
