@@ -19,7 +19,8 @@ Raspberry pi pico probe setup as well as pi pico setup for Linux (tested with li
   in ~/.bashrc sees the other. Fix paths, delete and reclone picoprobe, try build and 
   cmake again, it should resolve once paths are all matching
 * You must not name a directory "pico". It is recommended to clone and run the script in
-  home/$USER/ Documents/ directory 
+  home/$USER/ Documents/ directory. This is because a directory called pico will be created
+  in the scipt.
 
 ## Based on
 ``https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh``  
