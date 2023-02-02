@@ -8,7 +8,7 @@ Raspberry pi pico probe setup as well as pi pico setup for Linux (tested with li
 2. Clone this github repository using 
   ``git clone https://github.com/alexandersep/pico-probe``
 3. Enter folder ``cd pico-probe``
-4. Give yourself executable privileges ``chmod +x pico_setup.sh``
+4. Give yourself executable privileges ``chmod +x apps.sh``
 5. Run **APPS** ``./apps.sh``
 6. If installation successfull a restart may be required, if unsuccessfull, **APPS**
    gives error messages for backtracking and fixing issues.
